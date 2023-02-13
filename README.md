@@ -13,6 +13,21 @@ The name pyranine comes from the [dye](https://en.wikipedia.org/wiki/Pyranine) c
 
 ## Usage
 
+I've created this for my personal project [RepoExplorer](https://github.com/pedrozaalex/RepoExplorer), so I've only tested it with Vite. I'm currently using [vite-plugin-wasm-pack](https://www.npmjs.com/package/vite-plugin-wasm-pack) for that.
+
+```ts
+// vite.config.ts
+import wasmPack from "vite-plugin-wasm-pack";
+
+export default defineConfig({
+  // ...
+  plugins: [
+    // ...
+    wasmPack([], ["pyranine"]),
+  ],
+});
+```
+
 ```ts
 import initHighlighter, * as wasm from "pyranine";
 
@@ -47,4 +62,6 @@ tryHighlightStringAsHTML(code, "javascript", "base16-ocean.dark").then((c) =>
 
 ## Note
 
-You may get an warning saying "pyranine doesn't appear to be written in CJS...". This is because the library is written in Rust and compiled to WASM, and the tooling around that is still a bit immature. You can safely ignore this warning.
+You may get an warning saying "pyranine doesn't appear to be written in CJS...". This is because the library is written in Rust and compiled to WASM, and the tooling around that is still being developed. I may also be doing something wrong, but I'm not sure what. If you know, please let me know, or feel free to open a PR.
+
+The important thing is that the library seems to work fine, and the warning can be safely ignored.
