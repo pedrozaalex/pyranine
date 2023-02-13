@@ -1,8 +1,11 @@
 [package]
-name = "highlight-rs"
-version = "0.1.18"
+name = "pyranine"
+version = "1.0.0"
 authors = ["Alexandre Pedroza <pedrozaalexandre@gmail.com>"]
 edition = "2018"
+description = "A syntax highlighter for the web, based on syntect"
+license = "MIT"
+repository = "https://github.com/pedrozaalex/pyranine"
 
 [lib]
 crate-type = ["cdylib", "rlib"]

@@ -1,87 +1,50 @@
 <div align="center">
 
-  <h1><code>wasm-pack-template</code></h1>
-
-<strong>A template for kick starting a Rust and WebAssembly project using <a href="https://github.com/rustwasm/wasm-pack">wasm-pack</a>.</strong>
-
-  <p>
-    <a href="https://travis-ci.org/rustwasm/wasm-pack-template"><img src="https://img.shields.io/travis/rustwasm/wasm-pack-template.svg?style=flat-square" alt="Build Status" /></a>
-  </p>
-
-  <h3>
-    <a href="https://rustwasm.github.io/docs/wasm-pack/tutorials/npm-browser-packages/index.html">Tutorial</a>
-    <span> | </span>
-    <a href="https://discordapp.com/channels/442252698964721669/443151097398296587">Chat</a>
-  </h3>
-
-<sub>Built with 🦀🕸 by <a href="https://rustwasm.github.io/">The Rust and WebAssembly Working Group</a></sub>
+  <h1><code>pyranine</code></h1>
+<sub>Built with 🦀 + 🕸
 
 </div>
 
 ## About
 
-[**📚 Read this template tutorial! 📚**][template-docs]
+This is a simple library publishing a WASM module that can be used to highlight code in JavaScript, through the use of [syntect](https://github.com/trishume/syntect).
 
-This template is designed for compiling Rust libraries into WebAssembly and
-publishing the resulting package to NPM.
+The name pyranine comes from the [dye](https://en.wikipedia.org/wiki/Pyranine) commonly used in commercial yellow (paper) highlighters (and also in soup lol).
 
-Be sure to check out [other `wasm-pack` tutorials online][tutorials] for other
-templates and usages of `wasm-pack`.
+## Usage
 
-[tutorials]: https://rustwasm.github.io/docs/wasm-pack/tutorials/index.html
-[template-docs]: https://rustwasm.github.io/docs/wasm-pack/tutorials/npm-browser-packages/index.html
+```ts
+import initHighlighter, * as wasm from "pyranine";
 
-## 🚴 Usage
+const code = "const foo = 'bar';";
 
-### 🐑 Use `cargo generate` to Clone this Template
+/* The following themes are available:
+"base16-ocean.dark",
+"base16-eighties.dark",
+"base16-mocha.dark",
+"base16-ocean.light",
+"InspiredGitHub",
+"Solarized (dark)",
+"Solarized (light)",
+*/
 
-[Learn more about `cargo generate` here.](https://github.com/ashleygwilliams/cargo-generate)
+function tryHighlightStringAsHTML(
+  code: string,
+  language: string,
+  theme: string
+) {
+  return new Promise()<string>((resolve) => {
+    initHighlighter().then(() =>
+      resolve(wasm.highlight(code, language, theme))
+    );
+  });
+}
 
-```
-cargo generate --git https://github.com/rustwasm/wasm-pack-template.git --name my-project
-cd my-project
-```
-
-### 🛠️ Build with `wasm-pack build`
-
-```
-wasm-pack build
-```
-
-### 🔬 Test in Headless Browsers with `wasm-pack test`
-
-```
-wasm-pack test --headless --firefox
-```
-
-### 🎁 Publish to NPM with `wasm-pack publish`
-
-```
-wasm-pack publish
+tryHighlightStringAsHTML(code, "javascript", "base16-ocean.dark").then((c) =>
+  console.log(c)
+);
 ```
 
-## 🔋 Batteries Included
+## Note
 
-- [`wasm-bindgen`](https://github.com/rustwasm/wasm-bindgen) for communicating
-  between WebAssembly and JavaScript.
-- [`console_error_panic_hook`](https://github.com/rustwasm/console_error_panic_hook)
-  for logging panic messages to the developer console.
-- [`wee_alloc`](https://github.com/rustwasm/wee_alloc), an allocator optimized
-  for small code size.
-- `LICENSE-APACHE` and `LICENSE-MIT`: most Rust projects are licensed this way, so these are included for you
-
-## License
-
-Licensed under either of
-
-- Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
-- MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
-
-at your option.
-
-### Contribution
-
-Unless you explicitly state otherwise, any contribution intentionally
-submitted for inclusion in the work by you, as defined in the Apache-2.0
-license, shall be dual licensed as above, without any additional terms or
-conditions.
+You may get an warning saying "pyranine doesn't appear to be written in CJS...". This is because the library is written in Rust and compiled to WASM, and the tooling around that is still a bit immature. You can safely ignore this warning.
